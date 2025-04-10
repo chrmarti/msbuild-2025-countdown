@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to MS Build 2025</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+            color: #2c2c32;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #0078d4 0%, #28a8ea 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            min-width: 160px;
+            box-shadow: 0 10px 30px rgba(0, 120, 212, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 120, 212, 0.2);
+        }
+
+        .number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #0078d4;
+            text-shadow: 0 2px 4px rgba(0, 120, 212, 0.1);
+            margin-bottom: 0.5rem;
+        }
+
+        .label {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #6e6e6e;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .countdown-item:nth-child(1) { animation-delay: 0.1s; }
+        .countdown-item:nth-child(2) { animation-delay: 0.2s; }
+        .countdown-item:nth-child(3) { animation-delay: 0.3s; }
+        .countdown-item:nth-child(4) { animation-delay: 0.4s; }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            .countdown-item {
+                min-width: 130px;
+                padding: 1.5rem;
+            }
+            .number {
+                font-size: 3rem;
+            }
+            .label {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Countdown to MS Build 2025</h1>
+        <div class="countdown">
+            <div class="countdown-item">
+                <div class="number" id="days">--</div>
+                <div class="label">Days</div>
+            </div>
+            <div class="countdown-item">
+                <div class="number" id="hours">--</div>
+                <div class="label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="number" id="minutes">--</div>
+                <div class="label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="number" id="seconds">--</div>
+                <div class="label">Seconds</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // MS Build 2025 is typically in May, let's set it to May 20, 2025
+        const buildDate = new Date('May 20, 2025 09:00:00 PDT').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = buildDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+
+            if (distance < 0) {
+                clearInterval(interval);
+                document.querySelector('.container').innerHTML = '<h1>MS Build 2025 has started!</h1>';
+            }
+        }
+
+        const interval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
